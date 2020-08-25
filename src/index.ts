@@ -1,5 +1,6 @@
 import getTickers from './tickers';
 import { Browser } from 'puppeteer';
+import getFinancialRatiosForTicker from './data';
 
 const puppeteer = require('puppeteer');
 
@@ -13,6 +14,9 @@ async function main() {
 
     const tickers = await getTickers(browser);
     console.log(`tickers`, tickers);
+
+    const ratios = await getFinancialRatiosForTicker(browser, 'VRTX');
+    console.table(ratios);
 
     await browser.close();
   } catch (err) {
