@@ -10,7 +10,7 @@ const getFinancialRatiosForTicker = async (browser: Browser, quote: string) => {
 
   const TITLES_SELECTOR = '.snapshot-td2-cp';
   const VALUES_SELECTOR = '.snapshot-td2';
-  enum relevantTitles {
+  enum relevantRatios {
     'EPS past 5Y' = 'EPS past 5Y',
     'EPS this Y' = 'EPS this Y',
     'EPS Q/Q' = 'EPS Q/Q',
@@ -30,19 +30,19 @@ const getFinancialRatiosForTicker = async (browser: Browser, quote: string) => {
 
   const titles = (await page.$$eval(TITLES_SELECTOR, elements =>
     elements.map(item => item.textContent)
-  )) as relevantTitles[];
+  )) as relevantRatios[];
 
   const values = await page.$$eval(VALUES_SELECTOR, elements =>
     elements.map(item => item.textContent)
   );
 
   type Ratios = {
-    [key in relevantTitles]: string;
+    [key in relevantRatios]: string;
   };
 
   let ratios = {} as Ratios;
   titles.forEach((title, index) => {
-    if (Object.values(relevantTitles).includes(title)) {
+    if (Object.values(relevantRatios).includes(title)) {
       ratios[title] = values[index];
     }
   });

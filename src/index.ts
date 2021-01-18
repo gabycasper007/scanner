@@ -7,13 +7,13 @@ const puppeteer = require('puppeteer');
 async function main() {
   try {
     const browser: Browser = await puppeteer.launch({
-      headless: false, // this is useful when you want to see what's happening in the browser
-      slowMo: 40, // this is useful when you want to see what's happening in the browser
+      headless: false,
+      slowMo: 40,
       defaultViewport: null,
     });
 
     const tickers = await getTickers(browser);
-    console.log(`tickers`, tickers);
+    console.table(tickers);
 
     const ratios = await getFinancialRatiosForTicker(browser, 'VRTX');
     console.table(ratios);
